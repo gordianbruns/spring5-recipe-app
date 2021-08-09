@@ -1,5 +1,7 @@
 package edu.depauw.recipeapp.services;
 
+import edu.depauw.recipeapp.converters.RecipeCommandToRecipe;
+import edu.depauw.recipeapp.converters.RecipeToRecipeCommand;
 import edu.depauw.recipeapp.model.Recipe;
 import edu.depauw.recipeapp.repositories.RecipeRepository;
 import org.junit.Before;
@@ -22,12 +24,17 @@ public class RecipeServiceImplTest {
     @Mock
     RecipeRepository recipeRepository;
 
+    @Mock
+    RecipeToRecipeCommand recipeToRecipeCommand;
+
+    @Mock
+    RecipeCommandToRecipe recipeCommandToRecipe;
 
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
 
-        recipeService = new RecipeServiceImpl(recipeRepository);
+        recipeService = new RecipeServiceImpl(recipeRepository, recipeCommandToRecipe, recipeToRecipeCommand);
     }
 
     @Test
@@ -49,10 +56,10 @@ public class RecipeServiceImplTest {
     public void getRecipesTest() throws Exception {
 
         Recipe recipe = new Recipe();
-        HashSet receipesData = new HashSet();
-        receipesData.add(recipe);
+        HashSet recipesData = new HashSet();
+        recipesData.add(recipe);
 
-        when(recipeService.getRecipes()).thenReturn(receipesData);
+        when(recipeService.getRecipes()).thenReturn(recipesData);
 
         Set<Recipe> recipes = recipeService.getRecipes();
 
