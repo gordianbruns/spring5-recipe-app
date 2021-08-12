@@ -3,6 +3,7 @@ package edu.depauw.recipeapp.services;
 import edu.depauw.recipeapp.commands.RecipeCommand;
 import edu.depauw.recipeapp.converters.RecipeCommandToRecipe;
 import edu.depauw.recipeapp.converters.RecipeToRecipeCommand;
+import edu.depauw.recipeapp.exceptions.NotFoundException;
 import edu.depauw.recipeapp.model.Recipe;
 import edu.depauw.recipeapp.repositories.RecipeRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -42,7 +43,7 @@ public class RecipeServiceImpl implements RecipeService {
         Optional<Recipe> recipeOptional = recipeRepository.findById(l);
 
         if (!recipeOptional.isPresent()) {
-            throw new RuntimeException("Recipe Not Found!");
+            throw new NotFoundException("Recipe Not Found. For ID value: " + l.toString() );
         }
 
         return recipeOptional.get();
